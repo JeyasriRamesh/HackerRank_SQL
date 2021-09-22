@@ -4,7 +4,8 @@ Credit: Questions are from ["HackerRank"](https://www.hackerrank.com/)
 
 #### Question 1:
 
-Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. The output column headers should be Doctor, Professor, Singer, and Actor, respectively. Full description link: ["HackerRank: Occupations"](https://www.hackerrank.com/contests/simply-sql/challenges/occupations). 
+Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. The output column headers should be Doctor, Professor, Singer, and Actor, respectively. <br/>
+Full description link: ["HackerRank: Occupations"](https://www.hackerrank.com/contests/simply-sql/challenges/occupations). 
 
 #### Answer 1:
 
@@ -34,8 +35,34 @@ right join cte2 on cte1.row_num = cte2.row_num<br/>
 left join cte3 on cte3.row_num = cte2.row_num<br/>
 left join cte4 on cte4.row_num = cte2.row_num<br/>
 
-#### Output:
+#### Output 1:
 
 <img width="1006" alt="Screenshot 2021-09-22 at 11 18 43 AM" src="https://user-images.githubusercontent.com/47832124/134289864-39dc7402-873a-446d-8a1b-392a82200089.png">
+
+<hr style="border:2px solid gray"> </hr> 
+
+#### Question 2:
+
+Generate the following two result sets:
+
+1. Query an alphabetically ordered list of all names in OCCUPATIONS, immediately followed by the first letter of each profession as a parenthetical (i.e.: enclosed in parentheses). For example: AnActorName(A), ADoctorName(D), AProfessorName(P), and ASingerName(S).<br/>
+2. Query the number of ocurrences of each occupation in OCCUPATIONS. Sort the occurrences in ascending order, and output them in the following format:
+There are a total of [occupation_count] [occupation]s. <br/>
+Full description link: ["HackerRank: The PADS"](https://www.hackerrank.com/contests/simply-sql/challenges/the-pads). 
+
+#### Answer 2:
+
+with <br/>
+cte1 as <br/>
+(select concat('There are a total of ',count(O.name),' ', lower(O.occupation),'s.') as output <br/>
+from occupations O group by O.occupation order by count(O.name), O.occupation),<br/>
+cte2 as <br/>
+(select concat(C.name,'(',substring(C.occupation,1,1 ),')') as output <br/>
+ from occupations C)<br/>
+select output from cte1 union select output from cte2 order by output<br/>
+
+#### Output 2:
+
+<img width="1007" alt="Screenshot 2021-09-22 at 11 28 41 AM" src="https://user-images.githubusercontent.com/47832124/134290727-e91d29e0-d4b2-41a6-ac63-4f1b052bd629.png">
 
 <hr style="border:2px solid gray"> </hr> 
